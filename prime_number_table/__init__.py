@@ -1,13 +1,33 @@
+from prime_number_table.exceptions import NotIntegerError, NotSupported
+
 
 class Multiplication():
-    def __init__(self, primes=10):
-        self.primes = primes
-        self.prime_list = {2: True}
+    def __init__(self):
+        self.prime_list = {}
+        self.prime_matrix = []
+        self.feature_flag_optimize_prime_check = False
 
-    def fillPrimes(self):
-        primes_found = 0
+    ''' This function changes the feature flag that optimizes check by
+        serching in the primes already found, the optimization only works
+        for searches made in order '''
+    def toggle_feature_flag_optimize_prime_check():
+        self.feature_flag_optimize_prime_check =\
+            not self.feature_flag_optimize_prime_check
+
+    ''' Create Matrix containing all primes '''
+    def createMatrix(self, primes=10):
+        if not isinstance(primes, int):
+            raise NotIntegerError()
+        if primes < 0:
+            raise NotSupported()
+        self.fillPrimes(primes)
+
+    ''' fill hash of prime numbers with the first primes_to_find '''
+    def fillPrimes(self, primes_to_find=1):
+        self.prime_list = {2: True}
+        primes_found = 1
         numberToCheck = 2
-        while primes_found < self.primes:
+        while primes_found < primes_to_find:
             if self.is_prime(numberToCheck):
                 self.prime_list[numberToCheck] = True
                 primes_found += 1
@@ -22,8 +42,13 @@ class Multiplication():
         # number and check it
         div = 3
         while div*div <= number:
-            # we take the advantage of checking only on prime numbers
-            if div in self.prime_list:
+            # check if feature flag is available
+            if self.feature_flag_optimize_prime_check:
+                # we take the advantage of checking only on prime numbers
+                if div in self.prime_list:
+                    if number % div == 0:
+                        return False
+            else:
                 if number % div == 0:
                     return False
             div += 1
