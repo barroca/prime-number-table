@@ -1,19 +1,53 @@
 from unittest import TestCase
-from prime_number_table import Multiplication
+from prime_number_table import PrimeNumberGenerator
 from prime_number_table.exceptions import NotIntegerError, NotSupported
 
 
-class AppTestCase(TestCase):
+class PrimeNumberGeneratorTest(TestCase):
 
     def setUp(self):
-        self.prime_number_table_multiplication = Multiplication()
+        self.prime_number_table_multiplication = PrimeNumberGenerator()
 
     def testClass(self):
         self.assertIsInstance(self.prime_number_table_multiplication,
-                              Multiplication)
+                              PrimeNumberGenerator)
 
+    ''' This test checks the Exceptions '''
     def testErrorInput(self):
         with self.assertRaises(NotIntegerError):
-            self.prime_number_table_multiplication.createMatrix(primes="not int")
+            self.prime_number_table_multiplication.create_list(primes="not int")
         with self.assertRaises(NotSupported):
-            self.prime_number_table_multiplication.createMatrix(primes=-1)
+            self.prime_number_table_multiplication.create_list(primes=-1)
+
+    ''' This test evaluate the is_prime function'''
+    def testIsPrime(self):
+        self.assertTrue(self.prime_number_table_multiplication.is_prime(2))
+        self.assertFalse(self.prime_number_table_multiplication.is_prime(4))
+        self.assertFalse(self.prime_number_table_multiplication.is_prime(8))
+        self.assertTrue(self.prime_number_table_multiplication.is_prime(13))
+        self.assertFalse(self.prime_number_table_multiplication.is_prime(-4))
+
+    ''' This test evaluate the usage of the feature flag '''
+    def testIsPrimeWithOptimization(self):
+        # we toggle the optimization that does not work if we don't have the prime list yet
+        self.prime_number_table_multiplication.toggle_feature_flag_optimize_prime_check()
+        self.assertTrue(self.prime_number_table_multiplication.is_prime(9))
+        # we fill the list
+        self.prime_number_table_multiplication.create_list(primes=10)
+        # Now we run the assertion again and the function works as expected
+        self.assertFalse(self.prime_number_table_multiplication.is_prime(9))
+
+    ''' This test checks if the prime list is correct '''
+    def testTenFirstPrimes(self):
+        # we reset the test
+        self.setUp()
+
+        self.prime_number_table_multiplication.create_list(primes=0)
+        self.assertEqual(self.prime_number_table_multiplication.prime_list, {})
+
+        self.prime_number_table_multiplication.create_list(primes=10)
+        first_primes = {2: True, 3: True, 5: True, 7: True, 11: True, 13: True,
+                        17: True, 19: True, 23: True, 29: True}
+
+        self.assertEqual(self.prime_number_table_multiplication.prime_list,
+                         first_primes)

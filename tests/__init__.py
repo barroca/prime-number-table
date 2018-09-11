@@ -1,1 +1,1 @@
-from tests.test_cases import AppTestCase
+from tests.test_cases import PrimeNumberGeneratorTest
