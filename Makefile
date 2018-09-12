@@ -12,4 +12,4 @@ test:
 	docker run -t --rm ${IMAGE_NAME} py.test tests/
 
 destroy:
-	docker images -a | grep ${IMAGE_NAME} | awk '{print $$3}' | xargs docker rmi
+	docker images -a | grep ${IMAGE_NAME} | awk '{print $$3}' | xargs docker rmi -f
