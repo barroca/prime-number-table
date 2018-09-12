@@ -33,5 +33,10 @@ matrix:
             initialize_matrix[y][x]
 
 
-the complexy is O(generate_primes) + O(Nˆ2).  O(generate_primes) is checking the number with all the primes that are less than its square root, similar to what the siege of Erastothenes do, O(Mlog log M) Where M is the maximum number generated
+the complexy is O(generate_primes) + O(Nˆ2).  O(generate_primes) is checking the number with all the primes that are less than its square root, similar to what the siege of Erastothenes do, O(Mlog log M) Where M is the maximum number generated. Which makes the complexity O(MloglogM) considering that we cannot predict the maximum number generated.
+
+It is possible to optimize the generation of the primes more using other sieges even more:
+https://en.wikipedia.org/wiki/Generating_primes
+
+
 
