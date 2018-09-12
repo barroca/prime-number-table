@@ -45,16 +45,18 @@ class PrimeNumberGenerator():
             return False
         # we iterate over other numbers from 3 until the square root of that
         # number and check it
-        div = 3
-        while div*div <= number:
-            # check if feature flag is available
-            if self.feature_flag_optimize_prime_check:
-                # we take the advantage of checking only on prime numbers
-                if div in self.prime_list:
-                    if number % div == 0:
-                        return False
-            else:
+        # check if feature flag is available
+        if self.feature_flag_optimize_prime_check:
+            # we take the advantage of checking only on prime numbers like siege of Erastothenes do
+            for div in self.prime_list:
                 if number % div == 0:
                     return False
-            div += 1
+                if div*div >= number:
+                    break
+        else:
+            div = 3
+            while div*div <= number:
+                if number % div == 0:
+                    return False
+                div += 1
         return True
