@@ -6,7 +6,7 @@ build: Dockerfile
 	docker build -t ${IMAGE_NAME} .
 
 run:
-	docker run ${IMAGE_NAME} ${PRIMES}
+	docker run -t ${IMAGE_NAME} python ./prime-number-table.py ${PRIMES}
 
 test:
 	docker run -t --rm ${IMAGE_NAME} py.test tests/
