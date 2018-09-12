@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . . 
+COPY . .
 COPY tests/ tests/
 
-CMD [ "python", "./prime-number-table.py" ]
+ENTRYPOINT [ "python", "./prime-number-table.py" ]
