@@ -1,5 +1,4 @@
-from prime_number_table import PrimeNumberGenerator
+from prime_number_table.prime_matrix import PrimeMatrix
 
-prime_number_table_multiplication = PrimeNumberGenerator()
-prime_number_table_multiplication.create_list(10)
-print(prime_number_table_multiplication.prime_list)
+prime_matrix = PrimeMatrix()
+print(prime_matrix.get_matrix(10))

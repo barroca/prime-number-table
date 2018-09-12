@@ -1,26 +1,25 @@
 from unittest import TestCase
-from prime_number_table import PrimeNumberGenerator
+from prime_number_table.prime_number_generator import PrimeNumberGenerator
 from prime_number_table.exceptions import NotIntegerError, NotSupported
 
 
 class PrimeNumberGeneratorTest(TestCase):
-
     def setUp(self):
         self.prime_number_table_multiplication = PrimeNumberGenerator()
 
-    def testClass(self):
+    def test_class(self):
         self.assertIsInstance(self.prime_number_table_multiplication,
                               PrimeNumberGenerator)
 
     ''' This test checks the Exceptions '''
-    def testErrorInput(self):
+    def test_error_input(self):
         with self.assertRaises(NotIntegerError):
             self.prime_number_table_multiplication.create_list(primes="not int")
         with self.assertRaises(NotSupported):
             self.prime_number_table_multiplication.create_list(primes=-1)
 
     ''' This test evaluate the is_prime function'''
-    def testIsPrime(self):
+    def test_is_prime(self):
         self.assertTrue(self.prime_number_table_multiplication.is_prime(2))
         self.assertFalse(self.prime_number_table_multiplication.is_prime(4))
         self.assertFalse(self.prime_number_table_multiplication.is_prime(8))
@@ -28,7 +27,7 @@ class PrimeNumberGeneratorTest(TestCase):
         self.assertFalse(self.prime_number_table_multiplication.is_prime(-4))
 
     ''' This test evaluate the usage of the feature flag '''
-    def testIsPrimeWithOptimization(self):
+    def test_is_prime_with_optimization(self):
         # we toggle the optimization that does not work if we don't have the prime list yet
         self.prime_number_table_multiplication.toggle_feature_flag_optimize_prime_check()
         self.assertTrue(self.prime_number_table_multiplication.is_prime(9))
@@ -38,7 +37,7 @@ class PrimeNumberGeneratorTest(TestCase):
         self.assertFalse(self.prime_number_table_multiplication.is_prime(9))
 
     ''' This test checks if the prime list is correct '''
-    def testTenFirstPrimes(self):
+    def test_first_ten_primes(self):
         # we reset the test
         self.setUp()
 
